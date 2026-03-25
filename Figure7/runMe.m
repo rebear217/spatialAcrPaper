@@ -1,13 +1,11 @@
+load('./data/qPCR.mat');
+
 figure(1)
 clf
 
-ABdose = [40 130 160 190;...
-     40 130 160 190;...
-     40 130 160 190];
+ABdose = repmat(flip(Locations), 3, 1);
 
-acrBperRobPerngDNA = [2.63 1.49 1.71 1.06;...
-                      1.79 1.32 1.02 0.97;...
-                      1.74 1.28 1.05 0.91];
+acrBperRobPerngDNA = flip(Pooled_qPCR_Data(:, 1:3))';
 
 X = ABdose(:);
 Y = acrBperRobPerngDNA(:);
@@ -34,24 +32,18 @@ plot(x,F.feval(x),'-r')
 figure(2)
 clf
 
-ABdose2 = [40 70 130 160 190;...
-     40 70 130 160 190;...
-     40 70 130 160 190];
+acrBperRobPerngDNA2 = flip(Pooled_qPCR_Data(:, 4:end))';
 
-acrBperRobPerngDNA2 = [1.62 3.04 1.81 1.08 1.07;...
-                      1.47 1.81 1.88 0.91 1.03;...
-                      1.35 2.4 1.82 0.61 0.81];
-
-X2 = ABdose2(:);
+X2 = ABdose(:);
 Y2 = acrBperRobPerngDNA2(:);
 grey = [1 1 1]*0.7;
 x2 = 35:2:195;
 
-errorbar(ABdose2(1,:),mean(acrBperRobPerngDNA2),1.96*std(acrBperRobPerngDNA2)/sqrt(2),'linestyle','none',...
+errorbar(ABdose(1,:),mean(acrBperRobPerngDNA2),1.96*std(acrBperRobPerngDNA2)/sqrt(2),'linestyle','none',...
     'Color',grey,'MarkerSize',30,'MarkerFaceColor',grey)
 hold on
 plot(X2,Y2,'.','color',grey,'MarkerSize',12)
-plot(ABdose2(1,:),mean(acrBperRobPerngDNA2),'.k','MarkerSize',32)
+plot(ABdose(1,:),mean(acrBperRobPerngDNA2),'.k','MarkerSize',32)
 
 axis tight
 plot([35 190],[1 1],'-k')

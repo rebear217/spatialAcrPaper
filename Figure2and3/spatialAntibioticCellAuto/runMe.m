@@ -4,8 +4,9 @@ clc
 
 %%
 
+PLOTSAVEON = 1;
 Tmax = 70;
-[state,plotStates] = simulation(Tmax);
+[state,plotStates] = simulation(Tmax,PLOTSAVEON);
 
 %%
 

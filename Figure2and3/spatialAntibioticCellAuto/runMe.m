@@ -13,9 +13,13 @@ figure(1)
 clf
 s=4;
 
-surf(plotStates(s:end,:),'linestyle','none')
+surf(plotStates(s:end,:),'EdgeColor','none','FaceColor','interp')
 axis tight
 box on
+camlight right
+lighting gouraud
+alpha(1)
+
 set(gca,'Xtick',0:20:100)
 set(gca,'XtickLabel',100:-20:0)
 
@@ -27,8 +31,13 @@ zlabel('bacterial population density')
 X = 1:100;
 hold on
 for T = 1:10:Tmax
-    plot3(X,T*ones(size(X)),plotStates(T+s-1,:),'-','Color',[1 1 1]*0.8,...
-        'LineWidth',3)
+    if T == 1
+        plot3(X,T*ones(size(X)),plotStates(T+s-1,:),'-','Color','r',...
+            'LineWidth',3)
+    else
+        plot3(X,T*ones(size(X)),plotStates(T+s-1,:),'-','Color',[1 1 1]*0.8,...
+            'LineWidth',3)
+    end
 end
 %colorbar
 view(6.25,53.4)

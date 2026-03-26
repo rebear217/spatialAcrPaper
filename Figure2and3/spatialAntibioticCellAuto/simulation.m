@@ -45,10 +45,10 @@ function [state,plotStates] = simulation(Tmax,PLOTSAVEON)
             plotHisto(state);
             count = count + 1;
         end
-        if PLOTSAVEON && mod(j,100) == 0 
+        if PLOTSAVEON && mod(j,100) == 0
             figure(1)
-            exportgraphics(gcf,['./figures/stateEpoch',num2str(epoch),'.pdf'])
-            exportgraphics(gcf,['./figures/stateEpoch',num2str(epoch),'.jpg'])
+            exportgraphics(gcf,['./figures/stateEpoch',num2str(epoch),'.pdf'],'ContentType','vector')
+            %exportgraphics(gcf,['./figures/stateEpoch',num2str(epoch),'.jpg'])
         end
 
     end

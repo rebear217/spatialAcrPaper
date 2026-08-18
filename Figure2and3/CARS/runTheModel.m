@@ -1,4 +1,6 @@
-function [mySurface,parameters,mySSurface,myRSurface] = runTheModel(option)
+function [mySurface,parameters,mySSurface,myRSurface,myASurface,myCSurface] = ...
+    runTheModel(option)
+    
     clc
 
     if nargin < 1
@@ -20,7 +22,6 @@ function [mySurface,parameters,mySSurface,myRSurface] = runTheModel(option)
 
     parameters = setGlobalParameters();
     [ic,parameters] = setInitialData(parameters,option);
-
     outState = solveForward(ic,0.001,parameters);
 
     figure(1)
@@ -41,6 +42,8 @@ function [mySurface,parameters,mySSurface,myRSurface] = runTheModel(option)
     mySurface = zeros(Nframes,N);
     myRSurface = zeros(Nframes,N);
     mySSurface = zeros(Nframes,N);
+    myCSurface = zeros(Nframes,N);
+    myASurface = zeros(Nframes,N);
     
     while j < Nframes && (currentC > initialC * 0.001)
         j = j + 1;
@@ -98,11 +101,15 @@ function [mySurface,parameters,mySSurface,myRSurface] = runTheModel(option)
         mySurface(j,:) = R+S;
         myRSurface(j,:) = R;
         mySSurface(j,:) = S;
+        myASurface(j,:) = A;
+        myCSurface(j,:) = C;
     end
 
     mySurface = mySurface(1:j,:);
     myRSurface = myRSurface(1:j,:);
     mySSurface = mySSurface(1:j,:);
+    myASurface = myASurface(1:j,:);
+    myCSurface = myCSurface(1:j,:);
 
     figure(1)
     export_fig(['figures/RFP-GFP-',date,'-',option,'.pdf'])  

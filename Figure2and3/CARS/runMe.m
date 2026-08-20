@@ -33,3 +33,13 @@ for option = 2:8
         parameters,num2str(option))
 end
 
+%% Not in the paper but used to answer to referee 2:
+
+% (all functions ending in R relate to this function call).
+
+close all
+for T = [10,15,20]
+    outputTR = timesolvePanelR(T);
+    close all
+end
+

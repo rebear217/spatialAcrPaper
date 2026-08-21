@@ -140,6 +140,8 @@ for f = 1:5
     legs3{f} = [legs3{f},' (corr coeff ',cf,')'];
 end
 
+fitFun = @(p,t) p(5)+abs(p(1))./(1+abs(p(2))*exp(-abs(t-abs(p(4)))*abs(p(3))));
+
 for j = 1:5
 
     f = DI(j);
@@ -147,7 +149,20 @@ for j = 1:5
     c = [s s/4 1-s];
     
     subplot(1,3,1)
-    plot(times/4,smooth(meansOperon{f},ss),'color',c,'linewidth',lw,'DisplayName',legs{j});
+    Y = smooth(meansOperon{f},ss);
+    plot(times/4,Y,'color',c,'linewidth',lw,'DisplayName',legs{j});
+    hold on
+    if ismember(j,[1,4,5])
+        fit = fitnlm(times/4,Y,fitFun,[max(Y),1,1,1,1])
+        if j < 5
+            plot(times/4,fit.Fitted,'--','color',c,'linewidth',1,...
+                'HandleVisibility','off')
+        else
+            plot(times/4,fit.Fitted,'--','color',c,'linewidth',1,...
+                'DisplayName','logistic regressions')
+        end
+    end
+
     hold on
 
     T = times/4;
